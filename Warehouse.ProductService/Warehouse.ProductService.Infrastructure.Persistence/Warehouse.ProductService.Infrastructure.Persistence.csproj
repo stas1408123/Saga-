@@ -20,8 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WarehouseService.Application\WarehouseService.Application.csproj" />
-    <ProjectReference Include="..\WarehouseService.DAL\WarehouseService.Domain.csproj" />
+    <ProjectReference Include="..\Warehouse.ProductService.Application\Warehouse.ProductService.Application.csproj" />
+    <ProjectReference Include="..\Warehouse.ProductService.Domain\Warehouse.ProductService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

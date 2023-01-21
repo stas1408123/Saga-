@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WarehouseService.Infrastructure\WarehouseService.Infrastructure.Persistance.csproj" />
+    <ProjectReference Include="..\Warehouse.ProductService.Infrastructure.Persistence\Warehouse.ProductService.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

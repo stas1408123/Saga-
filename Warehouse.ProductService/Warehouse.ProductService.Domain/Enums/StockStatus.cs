@@ -3,8 +3,8 @@
     public enum StockStatus
     {
         InStock = 0,
-        LowStock,
-        OutOfStock,
-        None
+        LowStock = 1,
+        OutOfStock = 2,
+        None = 3,
     }
 }

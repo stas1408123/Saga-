@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarehouseService.API", "WarehouseService\WarehouseService.API.csproj", "{82274D0D-CCE0-4B36-B5AC-ED3BB5D9CEB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.ProductService.API", "Warehouse.ProductService.API\Warehouse.ProductService.API.csproj", "{82274D0D-CCE0-4B36-B5AC-ED3BB5D9CEB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseService.Domain", "WarehouseService.DAL\WarehouseService.Domain.csproj", "{1D25A029-1459-46BC-80AB-E6A006C24FB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.ProductService.Domain", "Warehouse.ProductService.Domain\Warehouse.ProductService.Domain.csproj", "{1D25A029-1459-46BC-80AB-E6A006C24FB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseService.Infrastructure.Persistance", "WarehouseService.Infrastructure\WarehouseService.Infrastructure.Persistance.csproj", "{5CAE8999-AE2F-46DB-A434-20E1092EAF3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.ProductService.Infrastructure.Persistence", "Warehouse.ProductService.Infrastructure.Persistence\Warehouse.ProductService.Infrastructure.Persistence.csproj", "{5CAE8999-AE2F-46DB-A434-20E1092EAF3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehouseService.Application", "WarehouseService.Application\WarehouseService.Application.csproj", "{719CA2DC-99D3-428E-B769-D9ED7337DDCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.ProductService.Application", "Warehouse.ProductService.Application\Warehouse.ProductService.Application.csproj", "{719CA2DC-99D3-428E-B769-D9ED7337DDCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

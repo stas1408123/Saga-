@@ -3,11 +3,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WarehouseService.Application.Contracts.Repositories;
 using WarehouseService.Domain.Entities.Base;
-using WarehouseService.Infrastructure.Persistance.Repositories;
+using WarehouseService.Infrastructure.Persistence.Repositories;
 
-namespace WarehouseService.Infrastructure.Persistance.DI
+namespace WarehouseService.Infrastructure.Persistence.DI
 {
-    public static class PersistanceRegistar
+    public static class PersistenceRegistar
     {
         public static void AddPersistenceDependencies(this IServiceCollection services, IConfiguration config)
         {

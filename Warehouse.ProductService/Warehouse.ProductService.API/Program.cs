@@ -1,4 +1,5 @@
-using WarehouseService.Infrastructure.Persistance.DI;
+using WarehouseService.Infrastructure.Persistence.DI;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;

@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WarehouseService.Domain.Entities;
-using WarehouseService.Infrastructure.Persistance.EntitiesConfiguration;
+using WarehouseService.Infrastructure.Persistence.EntitiesConfiguration;
 
-namespace WarehouseService.Infrastructure.Persistance
+namespace WarehouseService.Infrastructure.Persistence
 {
     public sealed class DatabaseContext : DbContext
     {
-        public DbSet<OrderEntity>? Orders { get; set; }
         public DbSet<CategoryEntity>? Categories { get; set; }
         public DbSet<ProductEntity>? Products { get; set; }
 
@@ -18,7 +17,6 @@ namespace WarehouseService.Infrastructure.Persistance
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProductEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new OrderEntityConfiguration());
         }
     }
 }
