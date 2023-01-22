@@ -4,7 +4,7 @@ using WareHouse.OrderService.Application.Contracts.Contexts;
 using WareHouse.OrderService.Application.Contracts.Repositories;
 using WareHouse.OrderService.Domain.Entities.Base;
 
-namespace WareHouse.OrderService.Infrastructure.Persistence.Repositories
+namespace WareHouse.OrderService.Infrastructure.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : EntityBase
     {

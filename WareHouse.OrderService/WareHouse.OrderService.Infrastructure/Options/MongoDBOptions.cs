@@ -1,4 +1,4 @@
-﻿namespace WareHouse.OrderService.Infrastructure.Persistence.Options
+﻿namespace WareHouse.OrderService.Infrastructure.Options
 {
     public class MongoDBOptions
     {

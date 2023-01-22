@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WareHouse.OrderService.API"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WareHouse.OrderService.Domain", "WareHouse.OrderService.Domain\WareHouse.OrderService.Domain.csproj", "{EBB22311-1A05-45FB-9D09-0C2E98E41CBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WareHouse.OrderService.Infrastructure.Persistence", "WareHouse.OrderService.Infrastructure.Persistence\WareHouse.OrderService.Infrastructure.Persistence.csproj", "{070456CE-93E4-45E9-B5D1-3440AF559411}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WareHouse.OrderService.Infrastructure", "WareHouse.OrderService.Infrastructure\WareHouse.OrderService.Infrastructure.csproj", "{070456CE-93E4-45E9-B5D1-3440AF559411}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WareHouse.OrderService.Application", "WareHouse.OrderService.Application\WareHouse.OrderService.Application.csproj", "{77D447D3-046A-4D7A-BE11-2DBB96F44430}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WareHouse.OrderService.Application", "WareHouse.OrderService.Application\WareHouse.OrderService.Application.csproj", "{77D447D3-046A-4D7A-BE11-2DBB96F44430}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
