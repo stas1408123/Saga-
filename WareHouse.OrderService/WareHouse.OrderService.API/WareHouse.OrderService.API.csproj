@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WareHouse.OrderService.Infrastructure.Persistence\WareHouse.OrderService.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\WareHouse.OrderService.Infrastructure\WareHouse.OrderService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WareHouse.OrderService.Application.Contracts.Contexts;
 using WareHouse.OrderService.Application.Contracts.Repositories;
@@ -16,6 +17,14 @@ namespace WareHouse.OrderService.Infrastructure.Persistence.DI
 
             services.AddScoped<IMongoDBContext, MongoDBContext>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq();
+                x.SetKebabCaseEndpointNameFormatter();
+                x.UsingRabbitMq((context, cfg) => cfg.ConfigureEndpoints(context));
+            });
+
         }
     }
 }
