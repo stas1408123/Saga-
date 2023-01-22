@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WareHouse.OrderService.Application.Contracts.Contexts;
 using WareHouse.OrderService.Application.Contracts.Repositories;
@@ -11,9 +10,9 @@ namespace WareHouse.OrderService.Infrastructure.DI
 {
     public static class InfrastructureRegistar
     {
-        public static void AddInfrastructureDependencies(this IServiceCollection services, IConfiguration configuration)
+        public static void AddInfrastructureDependencies(this IServiceCollection services)
         {
-            services.Configure<MongoDBOptions>(options => configuration.GetSection(MongoDBOptions.MongoSettings));
+            services.ConfigureOptions<MongoDBOptionsSetup>();
 
             services.AddScoped<IMongoDBContext, MongoDBContext>();
             services.AddScoped<IOrderRepository, OrderRepository>();
@@ -22,9 +21,8 @@ namespace WareHouse.OrderService.Infrastructure.DI
             {
                 x.UsingRabbitMq();
                 x.SetKebabCaseEndpointNameFormatter();
-                x.UsingRabbitMq((context, cfg) => cfg.ConfigureEndpoints(context));
+                // x.UsingRabbitMq((context, cfg) => cfg.ConfigureEndpoints(context));
             });
-
         }
     }
 }

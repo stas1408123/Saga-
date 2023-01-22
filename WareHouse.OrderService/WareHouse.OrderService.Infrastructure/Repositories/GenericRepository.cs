@@ -17,7 +17,7 @@ namespace WareHouse.OrderService.Infrastructure.Repositories
             _collection = context.GetCollection<TEntity>();
         }
 
-        public async Task<int> Delete(int id, CancellationToken cancellationToken)
+        public async Task<int> Delete(string id, CancellationToken cancellationToken)
         {
             var result = await _collection.DeleteOneAsync(x => x.Id == id);
 
