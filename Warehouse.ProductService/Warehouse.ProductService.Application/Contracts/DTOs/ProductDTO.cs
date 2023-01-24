@@ -1,4 +1,4 @@
-﻿using Warehouse.Contracts.DTOs.Enums;
+﻿using WarehouseService.Domain.Enums;
 
 namespace Warehouse.Contracts.DTOs
 {

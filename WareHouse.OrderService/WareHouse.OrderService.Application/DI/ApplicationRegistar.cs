@@ -9,7 +9,7 @@ namespace WareHouse.OrderService.Application.DI
         public static void AddApplicationDependencies(this IServiceCollection services)
         {
             services.AddTransient<IOrderService, Services.OrderService>();
-            services.AddAutoMapper(typeof(EntityModelProfile));
+            services.AddAutoMapper(typeof(EntityModelProfile), typeof(ModelDTOProfile));
         }
     }
 }

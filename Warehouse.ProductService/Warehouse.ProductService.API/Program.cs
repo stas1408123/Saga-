@@ -1,3 +1,6 @@
+using System.Text.Json.Serialization;
+using Warehouse.ProductService.API.Mapper;
+using Warehouse.ProductService.Application.DI;
 using WarehouseService.Infrastructure.Persistence.DI;
 
 
@@ -8,6 +11,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistenceDependencies(configuration);
+builder.Services.AddApplicationDependencies();
+
+builder.Services.AddAutoMapper(typeof(ModelViewModelProfile));
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 var app = builder.Build();
 

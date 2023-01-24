@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WarehouseService.Application.Contracts.Repositories;
-using WarehouseService.Domain.Entities.Base;
-using WarehouseService.Infrastructure.Persistence.Repositories;
+using Warehouse.ProductService.Application.Contracts.Repositories;
+using Warehouse.ProductService.Infrastructure.Persistence.Repositories;
 
 namespace WarehouseService.Infrastructure.Persistence.DI
 {
@@ -16,7 +15,8 @@ namespace WarehouseService.Infrastructure.Persistence.DI
                 options.UseNpgsql(config.GetConnectionString("DbConnection"));
             });
 
-            services.AddScoped<IGenericRepository<EntityBase>, GenericRepository<EntityBase>>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
         }
     }
 }
