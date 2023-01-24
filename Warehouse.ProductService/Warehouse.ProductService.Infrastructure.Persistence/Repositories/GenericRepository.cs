@@ -20,7 +20,7 @@ namespace WarehouseService.Infrastructure.Persistence.Repositories
             _dbSet = _context.Set<TEntity>();
         }
 
-        public async Task<TEntity> Insert(TEntity entity, CancellationToken cancellationToken)
+        public virtual async Task<TEntity> Insert(TEntity entity, CancellationToken cancellationToken)
         {
             await _dbSet.AddAsync(entity, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
@@ -30,7 +30,7 @@ namespace WarehouseService.Infrastructure.Persistence.Repositories
 
         public virtual async Task<IEnumerable<TEntity>> GetByPredicate(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken)
         {
-            var entities = await Query.Where(predicate).ToListAsync(cancellationToken);
+            var entities = await Query.AsNoTracking().Where(predicate).ToListAsync(cancellationToken);
 
             return entities;
         }
@@ -45,22 +45,18 @@ namespace WarehouseService.Infrastructure.Persistence.Repositories
 
         public async Task<TEntity> Delete(int id, CancellationToken cancellationToken)
         {
-            var entity = await GetById(id, cancellationToken);
+            var entities = await GetByPredicate(x => x.Id == id, cancellationToken);
+            var entity = entities.FirstOrDefault();
 
-            _context.Entry(entity).State = EntityState.Deleted;
+            _context.Entry(entity!).State = EntityState.Deleted;
             await _context.SaveChangesAsync(cancellationToken);
 
-            return entity;
+            return entity!;
         }
 
         public virtual async Task<IEnumerable<TEntity>> Get(CancellationToken cancellationToken)
         {
             return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
-        }
-
-        public virtual async Task<TEntity> GetById(int id, CancellationToken cancellationToken)
-        {
-            return await Query.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task<TEntity> Update(TEntity entity, CancellationToken cancellationToken)
