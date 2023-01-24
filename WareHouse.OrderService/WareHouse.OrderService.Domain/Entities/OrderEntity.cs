@@ -11,8 +11,6 @@ namespace WareHouse.OrderService.Domain.Entities
     {
         public int ProductAmount { get; set; }
         public OrderStatus OrderStatus { get; set; }
-
-        //[BsonSerializer(typeof(BsonDateOnlySerializer))]
         public DateTime? Date { get; set; }
 
         public int ProductId { get; set; }
