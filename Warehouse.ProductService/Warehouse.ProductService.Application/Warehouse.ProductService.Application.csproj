@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Warehouse.ProductService.Domain\Warehouse.ProductService.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IntegrationEvents\Handlers\" />
+  </ItemGroup>
+
 </Project>

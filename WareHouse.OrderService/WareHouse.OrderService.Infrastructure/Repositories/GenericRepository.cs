@@ -4,7 +4,7 @@ using WareHouse.OrderService.Application.Contracts.Contexts;
 using WareHouse.OrderService.Application.Contracts.Repositories;
 using WareHouse.OrderService.Domain.Entities.Base;
 
-namespace WareHouse.OrderService.Infrastructure.Persistence.Repositories
+namespace WareHouse.OrderService.Infrastructure.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : EntityBase
     {
@@ -17,7 +17,7 @@ namespace WareHouse.OrderService.Infrastructure.Persistence.Repositories
             _collection = context.GetCollection<TEntity>();
         }
 
-        public async Task<int> Delete(int id, CancellationToken cancellationToken)
+        public async Task<int> Delete(string id, CancellationToken cancellationToken)
         {
             var result = await _collection.DeleteOneAsync(x => x.Id == id);
 

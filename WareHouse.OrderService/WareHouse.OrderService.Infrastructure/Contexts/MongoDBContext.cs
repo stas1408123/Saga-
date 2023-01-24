@@ -3,9 +3,9 @@ using MongoDB.Driver;
 using WareHouse.OrderService.Application.Contracts.Contexts;
 using WareHouse.OrderService.Domain.Attributes;
 using WareHouse.OrderService.Domain.Contracts.Entities;
-using WareHouse.OrderService.Infrastructure.Persistence.Options;
+using WareHouse.OrderService.Infrastructure.Options;
 
-namespace WareHouse.OrderService.Infrastructure.Persistence.Contexts
+namespace WareHouse.OrderService.Infrastructure.Contexts
 {
     public class MongoDBContext : IMongoDBContext
     {
