@@ -49,7 +49,7 @@ namespace WareHouse.OrderService.API.Controllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<OrderViewModel> GetById(string id, ChangeOrderStatusViewModel viewModel, CancellationToken cancellationToken)
+        public async Task<OrderViewModel> ChangeStatus(string id, ChangeOrderStatusViewModel viewModel, CancellationToken cancellationToken)
         {
             var order = await _orderService.ChangeStatus(id, viewModel.Status, cancellationToken);
             var result = _mapper.Map<OrderViewModel>(order);
