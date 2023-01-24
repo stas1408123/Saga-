@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Warehouse.ProductService.Application.Contracts.Repositories;
 using Warehouse.ProductService.Infrastructure.Persistence.Repositories;
+using WarehouseService.Application.Contracts.Repositories;
+using WarehouseService.Domain.Entities;
+using WarehouseService.Infrastructure.Persistence.Repositories;
 
 namespace WarehouseService.Infrastructure.Persistence.DI
 {
@@ -16,7 +19,7 @@ namespace WarehouseService.Infrastructure.Persistence.DI
             });
 
             services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IGenericRepository<CategoryEntity>, GenericRepository<CategoryEntity>>();
         }
     }
 }
