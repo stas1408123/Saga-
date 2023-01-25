@@ -1,8 +1,7 @@
 using System.Text.Json.Serialization;
 using Warehouse.ProductService.API.Mapper;
 using Warehouse.ProductService.Application.DI;
-using WarehouseService.Infrastructure.Persistence.DI;
-
+using WarehouseService.Infrastructure.DI;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -10,7 +9,7 @@ var configuration = builder.Configuration;
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddPersistenceDependencies(configuration);
+builder.Services.AddInfrastructureDependencies(configuration);
 builder.Services.AddApplicationDependencies();
 
 builder.Services.AddAutoMapper(typeof(ModelViewModelProfile));

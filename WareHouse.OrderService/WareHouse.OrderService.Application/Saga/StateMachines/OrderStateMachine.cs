@@ -5,8 +5,5 @@ namespace WareHouse.OrderService.Application.Saga.StateMachines
 {
     public class OrderStateMachine : MassTransitStateMachine<OrderState>
     {
-        public OrderStateMachine()
-        {
-        }
     }
 }

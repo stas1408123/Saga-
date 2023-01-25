@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Warehouse.ProductService.Infrastructure.Persistence\Warehouse.ProductService.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\Warehouse.ProductService.Infrastructure.Persistence\Warehouse.ProductService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

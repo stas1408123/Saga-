@@ -2,13 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WarehouseService.Infrastructure.Persistence;
+using WarehouseService.Infrastructure;
 
 #nullable disable
 
-namespace Warehouse.ProductService.Infrastructure.Persistence.Migrations
+namespace Warehouse.ProductService.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20230121204255_Initial")]

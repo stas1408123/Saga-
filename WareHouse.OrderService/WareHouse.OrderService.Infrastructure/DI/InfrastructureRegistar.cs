@@ -19,9 +19,17 @@ namespace WareHouse.OrderService.Infrastructure.DI
 
             services.AddMassTransit(x =>
             {
-                x.UsingRabbitMq();
                 x.SetKebabCaseEndpointNameFormatter();
-                // x.UsingRabbitMq((context, cfg) => cfg.ConfigureEndpoints(context));
+                x.UsingRabbitMq((context, config) =>
+                {
+                    config.Host("localhost", "/", host =>
+                    {
+                        host.Username("guest");
+                        host.Password("guest");
+                    });
+
+                    config.ConfigureEndpoints(context);
+                });
             });
         }
     }

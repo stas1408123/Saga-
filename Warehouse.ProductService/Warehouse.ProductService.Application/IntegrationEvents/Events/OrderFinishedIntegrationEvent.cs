@@ -1,7 +1,6 @@
 ﻿using Warehouse.Contracts.DTOs;
-using WareHouse.IntegrationEvents;
 
-namespace WareHouse.OrderService.Application.IntegrationEvents.Events
+namespace WareHouse.IntegrationEvents
 {
     public record OrderFinishedIntegrationEvent : IntegrationEvent<OrderDTO>
     {
