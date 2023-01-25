@@ -9,6 +9,8 @@ namespace WareHouse.OrderService.Application.Mapper
         public EntityModelProfile()
         {
             CreateMap<OrderEntity, Order>().ReverseMap();
+            CreateMap<OrderEntity, OrderDetails>().ReverseMap();
+            CreateMap<Order, OrderDetails>().ReverseMap();
         }
     }
 }

@@ -72,8 +72,8 @@ namespace WareHouse.OrderService.Application.Services
 
         public async Task<Order> GetById(string id, CancellationToken cancellationToken)
         {
-            var entity = await _orderRepository.GetByPredicate(x => x.Id == id, cancellationToken);
-            var result = _mapper.Map<Order>(entity);
+            var entities = await _orderRepository.GetByPredicate(x => x.Id == id, cancellationToken);
+            var result = _mapper.Map<Order>(entities.FirstOrDefault());
 
             return result;
         }

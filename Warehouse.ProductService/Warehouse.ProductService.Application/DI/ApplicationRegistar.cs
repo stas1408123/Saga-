@@ -17,6 +17,7 @@ namespace Warehouse.ProductService.Application.DI
             services.AddAutoMapper(typeof(EntityModelProfile), typeof(ModelDTOProfile));
 
             services.AddTransient<IIntegrationEventHandler<OrderStartedIntegrationEvent>, OrderStartedHandler>();
+            services.AddTransient<IIntegrationEventHandler<OrderFinishedIntegrationEvent>, OrderFinishedHandler>();
         }
     }
 }

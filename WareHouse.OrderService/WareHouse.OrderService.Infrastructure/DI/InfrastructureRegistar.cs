@@ -1,5 +1,6 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
+using WareHouse.OrderService.Application.Consumers;
 using WareHouse.OrderService.Application.Contracts.Contexts;
 using WareHouse.OrderService.Application.Contracts.Repositories;
 using WareHouse.OrderService.Infrastructure.Contexts;
@@ -19,6 +20,8 @@ namespace WareHouse.OrderService.Infrastructure.DI
 
             services.AddMassTransit(x =>
             {
+                x.AddConsumer<ProductInStockConsumer>();
+
                 x.SetKebabCaseEndpointNameFormatter();
                 x.UsingRabbitMq((context, config) =>
                 {
@@ -31,6 +34,8 @@ namespace WareHouse.OrderService.Infrastructure.DI
                     config.ConfigureEndpoints(context);
                 });
             });
+
+
         }
     }
 }

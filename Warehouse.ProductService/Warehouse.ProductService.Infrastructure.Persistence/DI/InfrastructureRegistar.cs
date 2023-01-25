@@ -24,6 +24,7 @@ namespace WarehouseService.Infrastructure.DI
             {
                 x.SetKebabCaseEndpointNameFormatter();
                 x.AddConsumer<OrderStartedConsumer>();
+                x.AddConsumer<OrderFinishedConsumer>();
 
                 x.UsingRabbitMq((context, config) =>
                 {
