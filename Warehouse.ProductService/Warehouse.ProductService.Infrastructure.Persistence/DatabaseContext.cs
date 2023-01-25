@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WarehouseService.Domain.Entities;
-using WarehouseService.Infrastructure.Persistence.EntitiesConfiguration;
+using WarehouseService.Infrastructure.EntitiesConfiguration;
 
-namespace WarehouseService.Infrastructure.Persistence
+namespace WarehouseService.Infrastructure
 {
     public sealed class DatabaseContext : DbContext
     {

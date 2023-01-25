@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.ProductService.AP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.ProductService.Domain", "Warehouse.ProductService.Domain\Warehouse.ProductService.Domain.csproj", "{1D25A029-1459-46BC-80AB-E6A006C24FB5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.ProductService.Infrastructure.Persistence", "Warehouse.ProductService.Infrastructure.Persistence\Warehouse.ProductService.Infrastructure.Persistence.csproj", "{5CAE8999-AE2F-46DB-A434-20E1092EAF3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.ProductService.Infrastructure", "Warehouse.ProductService.Infrastructure.Persistence\Warehouse.ProductService.Infrastructure.csproj", "{5CAE8999-AE2F-46DB-A434-20E1092EAF3C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.ProductService.Application", "Warehouse.ProductService.Application\Warehouse.ProductService.Application.csproj", "{719CA2DC-99D3-428E-B769-D9ED7337DDCE}"
 EndProject

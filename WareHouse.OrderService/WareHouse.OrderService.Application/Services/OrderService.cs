@@ -1,4 +1,8 @@
 ﻿using AutoMapper;
+using MassTransit;
+using Microsoft.Extensions.Logging;
+using Warehouse.Contracts.DTOs;
+using WareHouse.IntegrationEvents;
 using WareHouse.OrderService.Application.Contracts.Repositories;
 using WareHouse.OrderService.Application.Contracts.Services;
 using WareHouse.OrderService.Application.Models;
@@ -11,15 +15,26 @@ namespace WareHouse.OrderService.Application.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
+        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly ILogger<OrderService> _logger;
 
-        public OrderService(IOrderRepository orderRepository, IMapper mapper)
+        public OrderService(IOrderRepository orderRepository, IMapper mapper, IPublishEndpoint publishEndpoint, ILogger<OrderService> logger)
         {
+            ArgumentNullException.ThrowIfNull(orderRepository);
+            ArgumentNullException.ThrowIfNull(mapper);
+            ArgumentNullException.ThrowIfNull(publishEndpoint);
+            ArgumentNullException.ThrowIfNull(logger);
+
             _mapper = mapper;
             _orderRepository = orderRepository;
+            _publishEndpoint = publishEndpoint;
+            _logger = logger;
         }
 
         public async Task<Order> PerformOrder(OrderDetails orderDetails, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Start perform order process");
+
             var order = new Order()
             {
                 Date = DateTime.UtcNow,
@@ -29,11 +44,14 @@ namespace WareHouse.OrderService.Application.Services
             _mapper.Map(orderDetails, order);
 
             var orderEntity = _mapper.Map<OrderEntity>(order);
-
             var insertedEntity = await _orderRepository.Insert(orderEntity, cancellationToken);
             var result = _mapper.Map<Order>(insertedEntity);
 
-            return result;
+            await _publishEndpoint.Publish(new OrderStartedIntegrationEvent(_mapper.Map<OrderDTO>(result)));
+
+            _logger.LogInformation("Perform order process: Published order started event. Order id: {order.Id}", result.Id);
+
+            return order;
         }
 
         public async Task<Order> ChangeStatus(string id, OrderStatus status, CancellationToken cancellationToken)

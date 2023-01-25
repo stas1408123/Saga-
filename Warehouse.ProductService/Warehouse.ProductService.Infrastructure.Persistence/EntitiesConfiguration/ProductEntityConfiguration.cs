@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WarehouseService.Domain.Entities;
 
-namespace WarehouseService.Infrastructure.Persistence.EntitiesConfiguration
+namespace WarehouseService.Infrastructure.EntitiesConfiguration
 {
     public class ProductEntityConfiguration : IEntityTypeConfiguration<ProductEntity>
     {

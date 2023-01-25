@@ -2,10 +2,10 @@
 using System.Linq.Expressions;
 using Warehouse.ProductService.Application.Contracts.Repositories;
 using WarehouseService.Domain.Entities;
-using WarehouseService.Infrastructure.Persistence;
-using WarehouseService.Infrastructure.Persistence.Repositories;
+using WarehouseService.Infrastructure;
+using WarehouseService.Infrastructure.Repositories;
 
-namespace Warehouse.ProductService.Infrastructure.Persistence.Repositories
+namespace Warehouse.ProductService.Infrastructure.Repositories
 {
     public class ProductRepository : GenericRepository<ProductEntity>, IProductRepository
     {

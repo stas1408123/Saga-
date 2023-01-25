@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using WarehouseService.Application.Contracts.Repositories;
 using WarehouseService.Domain.Entities.Base;
 
-namespace WarehouseService.Infrastructure.Persistence.Repositories
+namespace WarehouseService.Infrastructure.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : EntityBase
     {
