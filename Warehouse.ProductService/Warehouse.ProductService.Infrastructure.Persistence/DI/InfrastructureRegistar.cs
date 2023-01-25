@@ -34,15 +34,6 @@ namespace WarehouseService.Infrastructure.DI
                     });
 
                     config.ConfigureEndpoints(context);
-
-                    //config.ReceiveEndpoint("product-input-queue", e =>
-                    //{
-                    //    e.Bind("order-process-exchange");
-                    //});
-
-                    //config.Publish<ProductOutOfStockIntegrationEvent>(x => { x.ExchangeType = ExchangeType.Fanout; x.Exclude = true; x.BindQueue("order-process-exchange", "product-input-queue"); });
-                    //config.Publish<ProductInStockIntegrationEvent>(x => { x.ExchangeType = ExchangeType.Fanout; x.Exclude = true; x.BindQueue("order-process-exchange", "product-input-queue"); });
-                    //config.Publish<ProductLowStockIntegrationEvent>(x => { x.ExchangeType = ExchangeType.Fanout; x.Exclude = true; x.BindQueue("order-process-exchange", "product-input-queue"); });
                 });
             });
 
