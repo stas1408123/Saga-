@@ -4,8 +4,6 @@ namespace WareHouse.IntegrationEvents
 {
     public record ProductOutOfStockIntegrationEvent : IntegrationEvent<ProductDTO>
     {
-        public ProductOutOfStockIntegrationEvent(ProductDTO Payload) : base(Payload)
-        {
-        }
+        public ProductOutOfStockIntegrationEvent(ProductDTO Payload) : base(Payload) { }
     }
 }

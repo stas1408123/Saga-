@@ -40,13 +40,15 @@ namespace Warehouse.ProductService.Application.IntegrationEvents.Handlers
                 return;
             }
 
+            var productDTO = _mapper.Map<ProductDTO>(product);
+
             switch (product.StockStatus)
             {
                 case StockStatus.InStock:
                     {
                         _logger.LogInformation("Process order: {id}. Product is in stock. Reserved product id: {productId}", order.Id, order.ProductId);
-                        var integrationEvent = new ProductInStockIntegrationEvent(_mapper.Map<ProductDTO>(product));
-                        _mapper.Map(order, integrationEvent);
+                        var integrationEvent = new ProductInStockIntegrationEvent(productDTO);
+                        _mapper.Map(order, integrationEvent.Payload);
 
                         await _publishEndpoint.Publish(integrationEvent, cancellationToken);
                         _logger.LogInformation("Process order: {id}. Published product in stock event: {productId}", order.Id, product.Id);
@@ -56,7 +58,11 @@ namespace Warehouse.ProductService.Application.IntegrationEvents.Handlers
                 case StockStatus.LowStock:
                     {
                         _logger.LogInformation("Process order: {id}. Product is in low stock. Reserved product. Product id: {productId}", order.Id, order.ProductId);
-                        await _publishEndpoint.Publish(new ProductLowStockIntegrationEvent(_mapper.Map<ProductDTO>(product)), cancellationToken);
+                        var integrationEvent = new ProductLowStockIntegrationEvent(productDTO);
+                        _mapper.Map(order, integrationEvent.Payload);
+
+                        await _publishEndpoint.Publish(integrationEvent, cancellationToken);
+
                         _logger.LogInformation("Process order: {id}. Published product low stock event: {productId}", order.Id, product.Id);
 
                         break;
@@ -64,7 +70,11 @@ namespace Warehouse.ProductService.Application.IntegrationEvents.Handlers
                 case StockStatus.OutOfStock:
                     {
                         _logger.LogInformation("Process order: {id}. Product is out of stock. Product id: {productId}", order.Id, order.ProductId);
-                        await _publishEndpoint.Publish(new ProductOutOfStockIntegrationEvent(_mapper.Map<ProductDTO>(product)), cancellationToken);
+                        var integrationEvent = new ProductOutOfStockIntegrationEvent(productDTO);
+                        _mapper.Map(order, integrationEvent.Payload);
+
+                        await _publishEndpoint.Publish(integrationEvent, cancellationToken);
+
                         _logger.LogInformation("Process order: {id}. Published product out of stock event: {productId}", order.Id, product.Id);
 
                         break;

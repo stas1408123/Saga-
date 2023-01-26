@@ -5,6 +5,7 @@ using Warehouse.Contracts.DTOs;
 using WareHouse.IntegrationEvents;
 using WareHouse.OrderService.Application.Contracts.Handlers;
 using WareHouse.OrderService.Application.Contracts.Services;
+using WareHouse.OrderService.Domain.Enums;
 
 namespace Warehouse.OrderService.Application.IntegrationEvents.Handlers
 {
@@ -33,9 +34,16 @@ namespace Warehouse.OrderService.Application.IntegrationEvents.Handlers
             var product = @event.Payload;
             var order = await _orderService.GetById(product.OrderId, cancellationToken);
 
-            _logger.LogInformation("Approve order: {id} process for product id: {productId}", product.OrderId, product.Id);
+            if (order is null)
+            {
+                _logger.LogError("Order is null. Approve order: {id} process for product id: {productId}", order.Id, product.Id);
+                return;
+            }
 
-            await _publishEndpoint.Publish(new OrderFinishedIntegrationEvent(_mapper.Map<OrderDTO>(order)));
+            _logger.LogInformation("Approve order: {id} process for product id: {productId}", order.Id, product.Id);
+
+            var updatedOrder = await _orderService.ChangeStatus(order.Id, OrderStatus.Approved, cancellationToken);
+            await _publishEndpoint.Publish(new OrderFinishedIntegrationEvent(_mapper.Map<OrderDTO>(updatedOrder)));
 
             _logger.LogInformation("Finished order process for product id: {id}", product.Id);
         }

@@ -8,7 +8,9 @@ namespace Warehouse.ProductService.Application.Mapper
     {
         public ModelDTOProfile()
         {
-            CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<Product, ProductDTO>()
+                .ForMember(x => x.OrderId, opt => opt.Ignore())
+                .ReverseMap();
 
             CreateMap<OrderDTO, ProductDTO>()
                 .ForMember(x => x.Id, opt => opt.Ignore())

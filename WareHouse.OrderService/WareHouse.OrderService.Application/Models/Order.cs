@@ -4,7 +4,7 @@ namespace WareHouse.OrderService.Application.Models
 {
     public class Order
     {
-        public string? Id { get; set; }
+        public string Id { get; set; } = null!;
         public int ProductAmount { get; set; }
         public OrderStatus OrderStatus { get; set; }
         public DateTime? Date { get; set; }
