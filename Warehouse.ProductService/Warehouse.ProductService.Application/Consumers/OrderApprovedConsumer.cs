@@ -6,12 +6,12 @@ using WareHouse.IntegrationEvents;
 
 namespace Warehouse.ProductService.Application.Consumers
 {
-    public class OrderDeclinedConsumer : IConsumer<OrderDeclinedIntegrationEvent>
+    public class OrderApprovedConsumer : IConsumer<OrderApprovedIntegrationEvent>
     {
-        private readonly ILogger<OrderDeclinedConsumer> _logger;
-        private readonly IIntegrationEventHandler<OrderDeclinedIntegrationEvent> _eventHandler;
+        private readonly ILogger<OrderApprovedConsumer> _logger;
+        private readonly IIntegrationEventHandler<OrderApprovedIntegrationEvent> _eventHandler;
 
-        public OrderDeclinedConsumer(ILogger<OrderDeclinedConsumer> logger, IIntegrationEventHandler<OrderDeclinedIntegrationEvent> eventHandler)
+        public OrderApprovedConsumer(ILogger<OrderApprovedConsumer> logger, IIntegrationEventHandler<OrderApprovedIntegrationEvent> eventHandler)
         {
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(eventHandler);
@@ -20,10 +20,10 @@ namespace Warehouse.ProductService.Application.Consumers
             _eventHandler = eventHandler;
         }
 
-        public async Task Consume(ConsumeContext<OrderDeclinedIntegrationEvent> context)
+        public async Task Consume(ConsumeContext<OrderApprovedIntegrationEvent> context)
         {
             var jsonMessage = JsonConvert.SerializeObject(context.Message);
-            _logger.LogInformation("Order declined. Order: {order}", jsonMessage);
+            _logger.LogInformation("Order approved. Order: {order}", jsonMessage);
 
             await _eventHandler.Process(context.Message);
         }

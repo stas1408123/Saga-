@@ -40,7 +40,7 @@ namespace Warehouse.ProductService.Application.Services
             return _mapper.Map<TModel>(entity);
         }
 
-        public async Task<TModel> Insert(TModel model, CancellationToken cancellationToken)
+        public virtual async Task<TModel> Insert(TModel model, CancellationToken cancellationToken)
         {
             var entity = _mapper.Map<TEntity>(model);
 

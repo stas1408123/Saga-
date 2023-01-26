@@ -13,6 +13,9 @@ namespace Warehouse.ProductService.Application.Consumers
 
         public OrderFinishedConsumer(ILogger<OrderFinishedConsumer> logger, IIntegrationEventHandler<OrderFinishedIntegrationEvent> eventHandler)
         {
+            ArgumentNullException.ThrowIfNull(logger);
+            ArgumentNullException.ThrowIfNull(eventHandler);
+
             _logger = logger;
             _eventHandler = eventHandler;
         }

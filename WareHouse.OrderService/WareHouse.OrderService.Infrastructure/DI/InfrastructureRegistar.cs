@@ -21,6 +21,8 @@ namespace WareHouse.OrderService.Infrastructure.DI
             services.AddMassTransit(x =>
             {
                 x.AddConsumer<ProductInStockConsumer>();
+                x.AddConsumer<ProductOutOfStockConsumer>();
+                x.AddConsumer<ProductLowStockConsumer>();
 
                 x.SetKebabCaseEndpointNameFormatter();
                 x.UsingRabbitMq((context, config) =>

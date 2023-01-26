@@ -3,6 +3,7 @@ using MassTransit;
 using Microsoft.Extensions.Logging;
 using Warehouse.Contracts.DTOs;
 using WareHouse.IntegrationEvents;
+using WareHouse.OrderService.Application.Contracts.Factories;
 using WareHouse.OrderService.Application.Contracts.Repositories;
 using WareHouse.OrderService.Application.Contracts.Services;
 using WareHouse.OrderService.Application.Models;
@@ -17,18 +18,22 @@ namespace WareHouse.OrderService.Application.Services
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ILogger<OrderService> _logger;
+        private readonly IOrderEventsFactory _orderEventsFactory;
 
-        public OrderService(IOrderRepository orderRepository, IMapper mapper, IPublishEndpoint publishEndpoint, ILogger<OrderService> logger)
+        public OrderService(IOrderRepository orderRepository, IMapper mapper, IPublishEndpoint publishEndpoint, ILogger<OrderService> logger, IOrderEventsFactory orderEventsFactory)
         {
             ArgumentNullException.ThrowIfNull(orderRepository);
             ArgumentNullException.ThrowIfNull(mapper);
             ArgumentNullException.ThrowIfNull(publishEndpoint);
             ArgumentNullException.ThrowIfNull(logger);
+            ArgumentNullException.ThrowIfNull(orderEventsFactory);
+
 
             _mapper = mapper;
             _orderRepository = orderRepository;
             _publishEndpoint = publishEndpoint;
             _logger = logger;
+            _orderEventsFactory = orderEventsFactory;
         }
 
         public async Task<Order> PerformOrder(OrderDetails orderDetails, CancellationToken cancellationToken)
@@ -58,6 +63,11 @@ namespace WareHouse.OrderService.Application.Services
         {
             var updatedEntity = await _orderRepository.UpdateStatus(id, status, cancellationToken);
             var result = _mapper.Map<Order>(updatedEntity);
+
+            var integrationEvent = _orderEventsFactory.CreateIntegrationEvent(status, result);
+            await _publishEndpoint.Publish(integrationEvent);
+
+            _logger.LogInformation("Change status for order: {id} Status: {status}. Published event: {integrationEvent}", id, status, integrationEvent);
 
             return result;
         }

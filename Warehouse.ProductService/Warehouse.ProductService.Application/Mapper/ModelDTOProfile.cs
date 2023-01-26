@@ -16,6 +16,8 @@ namespace Warehouse.ProductService.Application.Mapper
                 .ForMember(x => x.Id, opt => opt.Ignore())
                 .ForMember(x => x.OrderId, opt => opt.MapFrom(x => x.Id))
                 .ReverseMap();
+
+            CreateMap<OrderDTO, OrderDetails>().ReverseMap();
         }
     }
 }
