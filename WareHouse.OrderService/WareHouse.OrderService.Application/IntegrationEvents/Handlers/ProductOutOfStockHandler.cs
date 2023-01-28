@@ -22,11 +22,11 @@ namespace WareHouse.OrderService.Application.IntegrationEvents.Handlers
         public async Task Process(ProductOutOfStockIntegrationEvent @event, CancellationToken cancellationToken = default)
         {
             var product = @event.Payload;
-            var order = await _orderService.GetById(product.OrderId, cancellationToken);
+            var order = await _orderService.GetById(product.OrderId!, cancellationToken);
 
             if (order is null)
             {
-                _logger.LogError("Order is null. Order: {id} process for product id: {productId}", order.Id, product.Id);
+                _logger.LogError("Order is null. Order: {id} process for product id: {productId}", order!.Id, product.Id);
                 return;
             }
 

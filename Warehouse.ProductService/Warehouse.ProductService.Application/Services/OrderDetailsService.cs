@@ -5,10 +5,13 @@ namespace Warehouse.ProductService.Application.Services
 {
     public class OrderDetailsService : IOrderDetailsService
     {
+
         public OrderDetailsService() { }
 
         public void ValidateOrderDetails(Product product, OrderDetails orderDetails, bool isReserveProduct = true)
         {
+            if (product is null) throw new ArgumentNullException(nameof(product));
+
             if (orderDetails is null) throw new ArgumentNullException(nameof(orderDetails));
 
             if (isReserveProduct && orderDetails.ProductAmount > product.Quantity) throw new ArgumentOutOfRangeException(nameof(orderDetails));

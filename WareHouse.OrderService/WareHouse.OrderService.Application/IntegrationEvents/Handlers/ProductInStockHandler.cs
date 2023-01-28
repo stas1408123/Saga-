@@ -23,17 +23,17 @@ namespace Warehouse.OrderService.Application.IntegrationEvents.Handlers
         public async Task Process(ProductInStockIntegrationEvent @event, CancellationToken cancellationToken = default)
         {
             var product = @event.Payload;
-            var order = await _orderService.GetById(product.OrderId, cancellationToken);
+            var order = await _orderService.GetById(product.OrderId!, cancellationToken);
 
             if (order is null)
             {
-                _logger.LogError("Order is null. Approve order: {id} process for product id: {productId}", order.Id, product.Id);
+                _logger.LogError("Order is null. Approve order: {id} process for product id: {productId}", order!.Id, product.Id);
                 return;
             }
 
             _logger.LogInformation("Approve order: {id} process for product id: {productId}", order.Id, product.Id);
 
-            var updatedOrder = await _orderService.ChangeStatus(order.Id, OrderStatus.Approved, cancellationToken);
+            await _orderService.ChangeStatus(order.Id, OrderStatus.Approved, cancellationToken);
 
             _logger.LogInformation("Finished order process for product id: {id}", product.Id);
         }

@@ -46,6 +46,7 @@ namespace Warehouse.ProductService.Application.Services
             product.Quantity -= orderDetails.ProductAmount;
 
             product.StockStatus = CalculateStockStatus(product.Quantity, product.Category);
+
             var updatedProduct = await _repository.Update(_mapper.Map<ProductEntity>(product), cancellationToken);
 
             return _mapper.Map<Product>(updatedProduct);

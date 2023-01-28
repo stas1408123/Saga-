@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Warehouse.ProductService.Application.Consumers;
 using Warehouse.ProductService.Application.Contracts.Repositories;
+using Warehouse.ProductService.Application.Contracts.Transaction;
 using Warehouse.ProductService.Infrastructure.Repositories;
+using Warehouse.ProductService.Infrastructure.Transaction;
 using WarehouseService.Application.Contracts.Repositories;
 using WarehouseService.Domain.Entities;
 using WarehouseService.Infrastructure.Repositories;
@@ -38,11 +40,17 @@ namespace WarehouseService.Infrastructure.DI
                     });
 
                     config.ConfigureEndpoints(context);
+
+                    config.UseDelayedRedelivery(r => r.Intervals(TimeSpan.FromSeconds(15), TimeSpan.FromSeconds(30)));
+                    config.UseMessageRetry(r => r.Immediate(2));
+                    config.UseInMemoryOutbox();
                 });
             });
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IGenericRepository<CategoryEntity>, GenericRepository<CategoryEntity>>();
+
+            services.AddScoped<IDatabaseContextTransaction, DatabaseContextTransaction>();
         }
     }
 }

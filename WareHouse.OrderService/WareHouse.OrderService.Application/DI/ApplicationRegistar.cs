@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Warehouse.OrderService.Application.IntegrationEvents.Handlers;
 using WareHouse.IntegrationEvents;
-using WareHouse.OrderService.Application.Contracts.Factories;
 using WareHouse.OrderService.Application.Contracts.Handlers;
 using WareHouse.OrderService.Application.Contracts.Services;
-using WareHouse.OrderService.Application.Factories;
+using WareHouse.OrderService.Application.Contracts.Strategy;
 using WareHouse.OrderService.Application.IntegrationEvents.Handlers;
 using WareHouse.OrderService.Application.Mapper;
+using WareHouse.OrderService.Application.Services.Strategy;
 
 namespace WareHouse.OrderService.Application.DI
 {
@@ -21,7 +21,9 @@ namespace WareHouse.OrderService.Application.DI
             services.AddTransient<IIntegrationEventHandler<ProductLowStockIntegrationEvent>, ProductLowStockHandler>();
             services.AddTransient<IIntegrationEventHandler<ProductOutOfStockIntegrationEvent>, ProductOutOfStockHandler>();
 
-            services.AddTransient<IOrderEventsFactory, OrderEventsFactory>();
+            services.AddTransient<IChangeOrderStatusStrategy, DeclineOrderStrategy>();
+            services.AddTransient<IChangeOrderStatusStrategy, ApproveOrderStrategy>();
+            services.AddTransient<IChangeOrderStatusStrategy, PutOrderInReviewStrategy>();
         }
     }
 }

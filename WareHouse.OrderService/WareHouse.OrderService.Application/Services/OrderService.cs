@@ -3,9 +3,9 @@ using MassTransit;
 using Microsoft.Extensions.Logging;
 using Warehouse.Contracts.DTOs;
 using WareHouse.IntegrationEvents;
-using WareHouse.OrderService.Application.Contracts.Factories;
 using WareHouse.OrderService.Application.Contracts.Repositories;
 using WareHouse.OrderService.Application.Contracts.Services;
+using WareHouse.OrderService.Application.Contracts.Strategy;
 using WareHouse.OrderService.Application.Models;
 using WareHouse.OrderService.Domain.Entities;
 using WareHouse.OrderService.Domain.Enums;
@@ -18,22 +18,25 @@ namespace WareHouse.OrderService.Application.Services
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ILogger<OrderService> _logger;
-        private readonly IOrderEventsFactory _orderEventsFactory;
+        private readonly IEnumerable<IChangeOrderStatusStrategy> _changeOrderStatusStrategies;
 
-        public OrderService(IOrderRepository orderRepository, IMapper mapper, IPublishEndpoint publishEndpoint, ILogger<OrderService> logger, IOrderEventsFactory orderEventsFactory)
+        public OrderService(IOrderRepository orderRepository,
+            IMapper mapper,
+            IPublishEndpoint publishEndpoint,
+            ILogger<OrderService> logger,
+            IEnumerable<IChangeOrderStatusStrategy> changeOrderStatusStrategies)
         {
             ArgumentNullException.ThrowIfNull(orderRepository);
             ArgumentNullException.ThrowIfNull(mapper);
             ArgumentNullException.ThrowIfNull(publishEndpoint);
             ArgumentNullException.ThrowIfNull(logger);
-            ArgumentNullException.ThrowIfNull(orderEventsFactory);
-
+            ArgumentNullException.ThrowIfNull(changeOrderStatusStrategies);
 
             _mapper = mapper;
             _orderRepository = orderRepository;
             _publishEndpoint = publishEndpoint;
             _logger = logger;
-            _orderEventsFactory = orderEventsFactory;
+            _changeOrderStatusStrategies = changeOrderStatusStrategies;
         }
 
         public async Task<Order> PerformOrder(OrderDetails orderDetails, CancellationToken cancellationToken)
@@ -61,13 +64,7 @@ namespace WareHouse.OrderService.Application.Services
 
         public async Task<Order> ChangeStatus(string id, OrderStatus status, CancellationToken cancellationToken)
         {
-            var updatedEntity = await _orderRepository.UpdateStatus(id, status, cancellationToken);
-            var result = _mapper.Map<Order>(updatedEntity);
-
-            var integrationEvent = _orderEventsFactory.CreateIntegrationEvent(status, result);
-            await _publishEndpoint.Publish(integrationEvent);
-
-            _logger.LogInformation("Change status for order: {id} Status: {status}. Published event: {integrationEvent}", id, status, integrationEvent);
+            var result = await _changeOrderStatusStrategies!.FirstOrDefault(x => x.IsApplicable(status))!.ChangeOrderStatus(id, cancellationToken);
 
             return result;
         }

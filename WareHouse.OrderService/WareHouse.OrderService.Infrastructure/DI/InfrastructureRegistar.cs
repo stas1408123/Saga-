@@ -34,6 +34,10 @@ namespace WareHouse.OrderService.Infrastructure.DI
                     });
 
                     config.ConfigureEndpoints(context);
+
+                    config.UseDelayedRedelivery(r => r.Intervals(TimeSpan.FromSeconds(15), TimeSpan.FromSeconds(30)));
+                    config.UseMessageRetry(r => r.Immediate(2));
+                    config.UseInMemoryOutbox();
                 });
             });
 

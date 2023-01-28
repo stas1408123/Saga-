@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Warehouse.Contracts.DTOs;
 using Warehouse.ProductService.Application.Contracts.Handlers;
 using WareHouse.IntegrationEvents;
 
@@ -10,22 +11,33 @@ namespace Warehouse.ProductService.Application.Consumers
     {
         private readonly ILogger<OrderFinishedConsumer> _logger;
         private readonly IIntegrationEventHandler<OrderFinishedIntegrationEvent> _eventHandler;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public OrderFinishedConsumer(ILogger<OrderFinishedConsumer> logger, IIntegrationEventHandler<OrderFinishedIntegrationEvent> eventHandler)
+        public OrderFinishedConsumer(ILogger<OrderFinishedConsumer> logger, IIntegrationEventHandler<OrderFinishedIntegrationEvent> eventHandler, IPublishEndpoint publishEndpoint)
         {
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(eventHandler);
 
             _logger = logger;
             _eventHandler = eventHandler;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task Consume(ConsumeContext<OrderFinishedIntegrationEvent> context)
         {
-            var jsonMessage = JsonConvert.SerializeObject(context.Message);
-            _logger.LogInformation("Order finished. Order: {order}", jsonMessage);
+            try
+            {
+                var jsonMessage = JsonConvert.SerializeObject(context.Message);
+                _logger.LogInformation("Order finished. Order: {order}", jsonMessage);
 
-            await _eventHandler.Process(context.Message);
+                await _eventHandler.Process(context.Message);
+            }
+            catch
+            {
+                var faultData = new FaultDTO(context.Message, typeof(OrderFinishedIntegrationEvent));
+
+                await _publishEndpoint.Publish(new FaultIntegrationEvent(faultData));
+            }
         }
     }
 }
