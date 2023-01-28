@@ -43,7 +43,7 @@ namespace WareHouse.OrderService.Application.Services.Strategy
 
         public bool IsApplicable(OrderStatus status) => status is OrderStatus.Declined;
 
-        private static static void ValidateOrderDeclined(OrderEntity? order)
+        private static void ValidateOrderDeclined(OrderEntity? order)
         {
             if (order is null) throw new ArgumentNullException(nameof(order));
 

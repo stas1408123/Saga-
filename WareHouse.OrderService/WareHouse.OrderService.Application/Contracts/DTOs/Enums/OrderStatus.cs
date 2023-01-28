@@ -6,6 +6,6 @@
         Approved = 1,
         InReview = 2,
         Declined = 3,
-        None = 4
+        Failed = 4
     }
 }

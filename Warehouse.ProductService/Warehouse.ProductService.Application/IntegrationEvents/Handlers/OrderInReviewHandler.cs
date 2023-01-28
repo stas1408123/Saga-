@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Warehouse.ProductService.Application.Contracts.Handlers;
 using Warehouse.ProductService.Application.Contracts.Services;
+using Warehouse.ProductService.Application.Models;
 using WareHouse.IntegrationEvents;
 
 namespace Warehouse.ProductService.Application.IntegrationEvents.Handlers
@@ -24,12 +25,15 @@ namespace Warehouse.ProductService.Application.IntegrationEvents.Handlers
             _mapper = mapper;
         }
 
-        public Task Process(OrderInReviewIntegrationEvent @event, CancellationToken cancellationToken = default)
+        public async Task Process(OrderInReviewIntegrationEvent @event, CancellationToken cancellationToken = default)
         {
             var order = @event.Payload;
-            _logger.LogInformation("Order in review event. Order id: {id} for product {productId}.", order.Id, order.ProductId);
 
-            return Task.CompletedTask;
+            _logger.LogInformation("Order in review event. Order id: {id} for product {productId}. Reserve product.", order.Id, order.ProductId);
+
+            var product = await _productService.ReserveProduct(_mapper.Map<OrderDetails>(order), cancellationToken);
+
+            _logger.LogInformation("Order in review event. Order id: {id} for product {productId}. Reserved product.", order.Id, product.Id);
         }
     }
 }

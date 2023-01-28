@@ -4,6 +4,7 @@ using Warehouse.Contracts.DTOs;
 using Warehouse.ProductService.Application.Contracts.Handlers;
 using Warehouse.ProductService.Application.Contracts.Services;
 using Warehouse.ProductService.Application.Contracts.Strategy;
+using Warehouse.ProductService.Application.Infrastructure.Exceptions;
 using Warehouse.ProductService.Application.Models;
 using WareHouse.IntegrationEvents;
 
@@ -36,13 +37,15 @@ namespace Warehouse.ProductService.Application.IntegrationEvents.Handlers
         {
             var order = @event.Payload;
             var product = await _productService.GetById(order.ProductId, cancellationToken);
-            var orderDetails = _mapper.Map<OrderDetails>(order);
 
-            if (product is null)
+            if (product == null)
             {
-                _logger.LogInformation("Process order started. No product with id: {id}", @event.Payload.ProductId);
-                return;
+                _logger.LogError("Order id: {id}. Product with id: {productId} is null", order.Id, order.ProductId);
+
+                throw new InvalidOrderDetailsException();
             }
+
+            var orderDetails = _mapper.Map<OrderDetails>(order);
 
             var productDTO = _mapper.Map<ProductDTO>(product);
             _mapper.Map(order, productDTO);

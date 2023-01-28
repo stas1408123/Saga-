@@ -20,10 +20,13 @@ namespace WareHouse.OrderService.Application.DI
             services.AddTransient<IIntegrationEventHandler<ProductInStockIntegrationEvent>, ProductInStockHandler>();
             services.AddTransient<IIntegrationEventHandler<ProductLowStockIntegrationEvent>, ProductLowStockHandler>();
             services.AddTransient<IIntegrationEventHandler<ProductOutOfStockIntegrationEvent>, ProductOutOfStockHandler>();
+            services.AddTransient<IIntegrationEventHandler<InvalidOrderDetailsIntegrationEvent>, InvalidOrderDetailsHandler>();
 
             services.AddTransient<IChangeOrderStatusStrategy, DeclineOrderStrategy>();
             services.AddTransient<IChangeOrderStatusStrategy, ApproveOrderStrategy>();
             services.AddTransient<IChangeOrderStatusStrategy, PutOrderInReviewStrategy>();
+            services.AddTransient<IChangeOrderStatusStrategy, PutOrderInPendingStrategy>();
+            services.AddTransient<IChangeOrderStatusStrategy, MarkOrderAsFailedStrategy>();
         }
     }
 }

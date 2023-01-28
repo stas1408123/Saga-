@@ -69,6 +69,14 @@ namespace WareHouse.OrderService.Application.Services
             return result;
         }
 
+        public async Task<int> DeleteFailedOrders(CancellationToken cancellationToken)
+        {
+            var failedOrders = await _orderRepository.GetByPredicate(x => x.OrderStatus == OrderStatus.Failed, cancellationToken);
+            var result = await _orderRepository.DeleteRange(failedOrders.Select(x => x.Id).ToList(), cancellationToken);
+
+            return result;
+        }
+
         public async Task<IEnumerable<Order>> GetAll(CancellationToken cancellationToken)
         {
             var entities = await _orderRepository.Get(cancellationToken);

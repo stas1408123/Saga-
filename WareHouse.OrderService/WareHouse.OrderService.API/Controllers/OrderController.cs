@@ -74,5 +74,13 @@ namespace WareHouse.OrderService.API.Controllers
 
             return result;
         }
+
+        [HttpDelete]
+        public async Task<int> DeleteFailedOrders(CancellationToken cancellationToken)
+        {
+            var result = await _orderService.DeleteFailedOrders(cancellationToken);
+
+            return result;
+        }
     }
 }
