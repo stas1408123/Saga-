@@ -21,6 +21,7 @@ namespace WareHouse.OrderService.Application.DI
             services.AddTransient<IIntegrationEventHandler<ProductLowStockIntegrationEvent>, ProductLowStockHandler>();
             services.AddTransient<IIntegrationEventHandler<ProductOutOfStockIntegrationEvent>, ProductOutOfStockHandler>();
             services.AddTransient<IIntegrationEventHandler<InvalidOrderDetailsIntegrationEvent>, InvalidOrderDetailsHandler>();
+            services.AddTransient<IIntegrationEventHandler<FaultIntegrationEvent>, FaultHandler>();
 
             services.AddTransient<IChangeOrderStatusStrategy, DeclineOrderStrategy>();
             services.AddTransient<IChangeOrderStatusStrategy, ApproveOrderStrategy>();

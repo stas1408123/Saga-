@@ -24,6 +24,7 @@ namespace WareHouse.OrderService.Infrastructure.DI
                 x.AddConsumer<ProductOutOfStockConsumer>();
                 x.AddConsumer<ProductLowStockConsumer>();
                 x.AddConsumer<InvalidOrderDetailsConsumer>();
+                x.AddConsumer<FaultConsumer>();
 
                 x.SetKebabCaseEndpointNameFormatter();
                 x.UsingRabbitMq((context, config) =>

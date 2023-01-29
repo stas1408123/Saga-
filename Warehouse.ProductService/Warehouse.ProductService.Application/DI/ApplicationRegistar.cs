@@ -24,6 +24,7 @@ namespace Warehouse.ProductService.Application.DI
             services.AddTransient<IIntegrationEventHandler<OrderApprovedIntegrationEvent>, OrderApprovedHandler>();
             services.AddTransient<IIntegrationEventHandler<OrderDeclinedIntegrationEvent>, OrderDeclinedHandler>();
             services.AddTransient<IIntegrationEventHandler<OrderInReviewIntegrationEvent>, OrderInReviewHandler>();
+            services.AddTransient<IIntegrationEventHandler<FaultIntegrationEvent>, FaultHandler>();
 
             services.AddTransient<IProcessingStockStatusStartegy, ProcessProductInStockStrategy>();
             services.AddTransient<IProcessingStockStatusStartegy, ProcessProductOutOfStockStrategy>();

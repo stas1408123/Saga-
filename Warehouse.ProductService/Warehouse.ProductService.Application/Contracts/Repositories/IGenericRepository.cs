@@ -10,5 +10,6 @@ namespace WarehouseService.Application.Contracts.Repositories
         Task<TEntity> Update(TEntity entity, CancellationToken cancellationToken);
         Task<TEntity> Delete(int id, CancellationToken cancellationToken);
         Task<IEnumerable<TEntity>> GetByPredicate(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken);
+        void RevertChanges();
     }
 }

@@ -1,6 +1,4 @@
-﻿using Warehouse.ProductService.Application.Contracts.Events;
-
-namespace Warehouse.Contracts.DTOs
+﻿namespace Warehouse.Contracts.DTOs
 {
-    public record FaultDTO(IIntegrationEvent @event, Type eventType);
+    public record FaultDTO(ProductDTO? Product, OrderDTO? Order, Type eventType);
 }

@@ -18,6 +18,7 @@ namespace Warehouse.ProductService.Application.Consumers
         {
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(eventHandler);
+            ArgumentNullException.ThrowIfNull(publishEndpoint);
 
             _logger = logger;
             _eventHandler = eventHandler;
@@ -43,7 +44,7 @@ namespace Warehouse.ProductService.Application.Consumers
             {
                 _logger.LogError("Approve order id: {id}. Failure in while processing product id: {productId}. Publising event.", context.Message.Payload.Id, context.Message.Payload.ProductId);
 
-                var faultData = new FaultDTO(context.Message, typeof(OrderApprovedIntegrationEvent));
+                var faultData = new FaultDTO(null, context.Message.Payload, typeof(OrderApprovedIntegrationEvent));
 
                 await _publishEndpoint.Publish(new FaultIntegrationEvent(faultData));
             }

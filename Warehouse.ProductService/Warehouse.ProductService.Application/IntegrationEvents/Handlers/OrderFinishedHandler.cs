@@ -18,13 +18,13 @@ namespace Warehouse.ProductService.Application.IntegrationEvents.Handlers
             _productRepository = productRepository;
         }
 
-        public async Task Process(OrderFinishedIntegrationEvent @event, CancellationToken cancellationToken = default)
+        public Task Process(OrderFinishedIntegrationEvent @event, CancellationToken cancellationToken = default)
         {
             var order = @event.Payload;
 
-            await _productRepository.SaveChangesAsync(cancellationToken);
-
             _logger.LogInformation("Order finished event. Order id: {id} for product {productId} successfully completed.", order.Id, order.ProductId);
+
+            return Task.CompletedTask;
         }
     }
 }
