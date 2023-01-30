@@ -30,7 +30,6 @@ namespace WarehouseService.Infrastructure.DI
                 x.AddConsumer<OrderApprovedConsumer>();
                 x.AddConsumer<OrderDeclinedConsumer>();
                 x.AddConsumer<OrderInReviewConsumer>();
-                x.AddConsumer<FaultConsumer>();
 
                 x.UsingRabbitMq((context, config) =>
                 {

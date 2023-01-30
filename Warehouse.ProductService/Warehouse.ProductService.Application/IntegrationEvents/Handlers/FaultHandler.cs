@@ -18,11 +18,9 @@ namespace Warehouse.ProductService.Application.IntegrationEvents.Handlers
 
         public Task Process(FaultIntegrationEvent @event, CancellationToken cancellationToken = default)
         {
-            var order = @event.Payload.Order;
+            var payload = @event.Payload;
 
-            _logger.LogWarning("Order: {id} for product {productId}. Something faulted. Reverting changes...", order.Id, order.ProductId);
-
-            _productRepository.RevertChanges();
+            _logger.LogWarning("Ordering process faulted. Payload: {payload}", payload);
 
             return Task.CompletedTask;
         }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Warehouse.ProductService.Application.Contracts.Handlers;
+using Warehouse.ProductService.Application.Contracts.Repositories;
 using Warehouse.ProductService.Application.Contracts.Services;
 using Warehouse.ProductService.Application.Models;
 using WareHouse.IntegrationEvents;
@@ -13,16 +14,20 @@ namespace Warehouse.ProductService.Application.IntegrationEvents.Handlers
         private readonly ILogger<OrderInReviewHandler> _logger;
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        private readonly IProductRepository _productRepository;
 
-        public OrderInReviewHandler(ILogger<OrderInReviewHandler> logger, IProductService productService, IMapper mapper)
+        public OrderInReviewHandler(ILogger<OrderInReviewHandler> logger, IProductService productService, IMapper mapper, IProductRepository productRepository)
         {
             ArgumentNullException.ThrowIfNull(logger);
             ArgumentNullException.ThrowIfNull(productService);
             ArgumentNullException.ThrowIfNull(mapper);
+            ArgumentNullException.ThrowIfNull(productRepository);
+
 
             _logger = logger;
             _productService = productService;
             _mapper = mapper;
+            _productRepository = productRepository;
         }
 
         public async Task Process(OrderInReviewIntegrationEvent @event, CancellationToken cancellationToken = default)

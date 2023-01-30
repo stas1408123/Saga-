@@ -37,7 +37,7 @@ namespace WareHouse.OrderService.Application.Consumers
             {
                 _logger.LogError("Finish order id: {id}. Failure in while processing order for product id: {productId}. Publising event.", context.Message.Payload.OrderId, context.Message.Payload.Id);
 
-                var faultData = new FaultDTO(context.Message.Payload, null, typeof(ProductLowStockIntegrationEvent));
+                var faultData = new FaultDTO(context.Message.Payload, null);
 
                 await _publishEndpoint.Publish(new FaultIntegrationEvent(faultData));
             }

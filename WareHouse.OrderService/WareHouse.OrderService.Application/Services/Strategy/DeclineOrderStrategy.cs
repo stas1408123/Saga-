@@ -47,7 +47,7 @@ namespace WareHouse.OrderService.Application.Services.Strategy
         {
             if (order is null) throw new ArgumentNullException(nameof(order));
 
-            if (order.OrderStatus == OrderStatus.Declined) throw new ArgumentException(nameof(order));
+            if (order.OrderStatus == OrderStatus.Declined || order.OrderStatus == OrderStatus.Failed) throw new ArgumentException(nameof(order));
         }
 
         private void ValidateOrderApproval(OrderEntity? order)

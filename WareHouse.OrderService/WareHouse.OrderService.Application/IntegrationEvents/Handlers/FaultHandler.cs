@@ -21,7 +21,7 @@ namespace WareHouse.OrderService.Application.IntegrationEvents.Handlers
         {
             var order = @event.Payload.Order;
 
-            _logger.LogWarning("Order: {id} for product {productId}. Something faulted. Reverting changes...", order.Id, order.ProductId);
+            _logger.LogWarning("Order: {id} for product {productId}. Something faulted. Reverting changes...", order?.Id, order.ProductId);
 
             await _orderService.ChangeStatus(order.Id, (OrderStatus)order.OrderStatus, cancellationToken);
         }

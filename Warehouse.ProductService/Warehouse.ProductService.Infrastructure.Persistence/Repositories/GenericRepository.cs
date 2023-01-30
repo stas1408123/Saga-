@@ -59,32 +59,12 @@ namespace WarehouseService.Infrastructure.Repositories
             return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public async Task<TEntity> Update(TEntity entity, CancellationToken cancellationToken)
+        public virtual async Task<TEntity> Update(TEntity entity, CancellationToken cancellationToken)
         {
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync(cancellationToken);
 
             return entity;
-        }
-
-        public void RevertChanges()
-        {
-            var changedEntries = _context.ChangeTracker.Entries().Where(x => x.State != EntityState.Unchanged).ToList();
-
-            foreach (var entry in changedEntries)
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Modified:
-                    case EntityState.Deleted:
-                        entry.State = EntityState.Modified;
-                        entry.State = EntityState.Unchanged;
-                        break;
-                    case EntityState.Added:
-                        entry.State = EntityState.Detached;
-                        break;
-                }
-            }
         }
     }
 }

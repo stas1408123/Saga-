@@ -37,7 +37,7 @@ namespace Warehouse.ProductService.Application.Consumers
             {
                 _logger.LogError("Put in review order id: {id}. Failure in while processing product id: {productId}. Publising event.", context.Message.Payload.Id, context.Message.Payload.ProductId);
 
-                var faultData = new FaultDTO(null, context.Message.Payload, typeof(OrderApprovedIntegrationEvent));
+                var faultData = new FaultDTO(null, context.Message.Payload);
 
                 await _publishEndpoint.Publish(new FaultIntegrationEvent(faultData));
             }
