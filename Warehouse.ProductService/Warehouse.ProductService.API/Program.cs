@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Warehouse.ProductService.API.Mapper;
 using Warehouse.ProductService.Application.DI;
+using WareHouse.ProductService.API.Middlewares;
 using WarehouseService.Infrastructure.DI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

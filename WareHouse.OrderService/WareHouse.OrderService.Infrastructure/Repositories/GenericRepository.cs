@@ -24,6 +24,13 @@ namespace WareHouse.OrderService.Infrastructure.Repositories
             return (int)result.DeletedCount;
         }
 
+        public async Task<int> DeleteRange(List<string> ids, CancellationToken cancellationToken)
+        {
+            var result = await _collection.DeleteManyAsync(x => ids.Contains(x.Id), cancellationToken);
+
+            return (int)result.DeletedCount;
+        }
+
         public async Task<IEnumerable<TEntity>> Get(CancellationToken cancellationToken)
         {
             var entities = await _collection.FindAsync(x => true, cancellationToken: cancellationToken);

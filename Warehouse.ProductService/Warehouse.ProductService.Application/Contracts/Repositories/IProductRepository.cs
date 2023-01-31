@@ -5,5 +5,6 @@ namespace Warehouse.ProductService.Application.Contracts.Repositories
 {
     public interface IProductRepository : IGenericRepository<ProductEntity>
     {
+        Task SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

@@ -24,5 +24,10 @@ namespace Warehouse.ProductService.Infrastructure.Repositories
 
             return entities;
         }
+
+        public async Task SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            await _context.SaveChangesAsync(cancellationToken);
+        }
     }
 }

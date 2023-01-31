@@ -5,6 +5,7 @@ using Warehouse.Contracts.DTOs;
 using WareHouse.IntegrationEvents;
 using WareHouse.OrderService.Application.Contracts.Repositories;
 using WareHouse.OrderService.Application.Contracts.Services;
+using WareHouse.OrderService.Application.Contracts.Strategy;
 using WareHouse.OrderService.Application.Models;
 using WareHouse.OrderService.Domain.Entities;
 using WareHouse.OrderService.Domain.Enums;
@@ -17,18 +18,25 @@ namespace WareHouse.OrderService.Application.Services
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly ILogger<OrderService> _logger;
+        private readonly IEnumerable<IChangeOrderStatusStrategy> _changeOrderStatusStrategies;
 
-        public OrderService(IOrderRepository orderRepository, IMapper mapper, IPublishEndpoint publishEndpoint, ILogger<OrderService> logger)
+        public OrderService(IOrderRepository orderRepository,
+            IMapper mapper,
+            IPublishEndpoint publishEndpoint,
+            ILogger<OrderService> logger,
+            IEnumerable<IChangeOrderStatusStrategy> changeOrderStatusStrategies)
         {
             ArgumentNullException.ThrowIfNull(orderRepository);
             ArgumentNullException.ThrowIfNull(mapper);
             ArgumentNullException.ThrowIfNull(publishEndpoint);
             ArgumentNullException.ThrowIfNull(logger);
+            ArgumentNullException.ThrowIfNull(changeOrderStatusStrategies);
 
             _mapper = mapper;
             _orderRepository = orderRepository;
             _publishEndpoint = publishEndpoint;
             _logger = logger;
+            _changeOrderStatusStrategies = changeOrderStatusStrategies;
         }
 
         public async Task<Order> PerformOrder(OrderDetails orderDetails, CancellationToken cancellationToken)
@@ -56,8 +64,15 @@ namespace WareHouse.OrderService.Application.Services
 
         public async Task<Order> ChangeStatus(string id, OrderStatus status, CancellationToken cancellationToken)
         {
-            var updatedEntity = await _orderRepository.UpdateStatus(id, status, cancellationToken);
-            var result = _mapper.Map<Order>(updatedEntity);
+            var result = await _changeOrderStatusStrategies!.FirstOrDefault(x => x.IsApplicable(status))!.ChangeOrderStatus(id, cancellationToken);
+
+            return result;
+        }
+
+        public async Task<int> DeleteFailedOrders(CancellationToken cancellationToken)
+        {
+            var failedOrders = await _orderRepository.GetByPredicate(x => x.OrderStatus == OrderStatus.Failed, cancellationToken);
+            var result = await _orderRepository.DeleteRange(failedOrders.Select(x => x.Id).ToList(), cancellationToken);
 
             return result;
         }

@@ -59,7 +59,7 @@ namespace WarehouseService.Infrastructure.Repositories
             return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public async Task<TEntity> Update(TEntity entity, CancellationToken cancellationToken)
+        public virtual async Task<TEntity> Update(TEntity entity, CancellationToken cancellationToken)
         {
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync(cancellationToken);

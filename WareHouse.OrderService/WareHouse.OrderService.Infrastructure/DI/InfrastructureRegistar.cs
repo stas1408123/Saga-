@@ -21,6 +21,10 @@ namespace WareHouse.OrderService.Infrastructure.DI
             services.AddMassTransit(x =>
             {
                 x.AddConsumer<ProductInStockConsumer>();
+                x.AddConsumer<ProductOutOfStockConsumer>();
+                x.AddConsumer<ProductLowStockConsumer>();
+                x.AddConsumer<InvalidOrderDetailsConsumer>();
+                x.AddConsumer<FaultConsumer>();
 
                 x.SetKebabCaseEndpointNameFormatter();
                 x.UsingRabbitMq((context, config) =>
@@ -32,6 +36,10 @@ namespace WareHouse.OrderService.Infrastructure.DI
                     });
 
                     config.ConfigureEndpoints(context);
+
+                    config.UseDelayedRedelivery(r => r.Intervals(TimeSpan.FromSeconds(15), TimeSpan.FromSeconds(30)));
+                    config.UseMessageRetry(r => r.Immediate(2));
+                    config.UseInMemoryOutbox();
                 });
             });
 

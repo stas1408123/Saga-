@@ -1,9 +1,9 @@
-﻿using WareHouse.OrderService.Domain.Enums;
+﻿using WareHouse.OrderService.API.ViewModels.Enums;
 
 namespace WareHouse.OrderService.API.ViewModels
 {
     public class ChangeOrderStatusViewModel
     {
-        public OrderStatus Status { get; set; }
+        public OrderStatusInput Status { get; set; }
     }
 }

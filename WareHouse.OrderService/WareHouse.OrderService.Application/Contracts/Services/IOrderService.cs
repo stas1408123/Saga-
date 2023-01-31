@@ -9,5 +9,7 @@ namespace WareHouse.OrderService.Application.Contracts.Services
         public Task<Order> GetById(string id, CancellationToken cancellationToken);
         public Task<Order> ChangeStatus(string id, OrderStatus status, CancellationToken cancellationToken);
         public Task<IEnumerable<Order>> GetAll(CancellationToken cancellationToken);
+
+        Task<int> DeleteFailedOrders(CancellationToken cancellationToken);
     }
 }

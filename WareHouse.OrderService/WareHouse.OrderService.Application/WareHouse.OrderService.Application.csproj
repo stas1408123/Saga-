@@ -20,8 +20,4 @@
     <ProjectReference Include="..\WareHouse.OrderService.Domain\WareHouse.OrderService.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\Producers\" />
-  </ItemGroup>
-
 </Project>
